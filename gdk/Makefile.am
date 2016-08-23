@@ -61,7 +61,8 @@ LDADD = 					\
 # setup source file variables
 #
 #
-# GDK header files for public installation (non-generated)
+#
+#GDK header files for public installation (non-generated)
 #
 #
 gdk_public_h_sources = 				\
