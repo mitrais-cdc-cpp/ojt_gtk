@@ -32,6 +32,7 @@ gsk_public_source_h = \
 	gskrenderer.h \
 	gskrendernode.h \
 	gskrendernodeiter.h \
+	gskresourcecache.h \
 	gsktypes.h
 gsk_private_source_h = \
 	gskcairorendererprivate.h \
@@ -43,6 +44,7 @@ gsk_private_source_h = \
 	gskprofilerprivate.h \
 	gskrendererprivate.h \
 	gskrendernodeprivate.h \
+	gskresourcecacheprivate.h \
 	gskshaderbuilderprivate.h
 gsk_private_source_c = \
 	gskprivate.c
@@ -62,6 +64,7 @@ gsk_source_c = \
 	gskrenderer.c \
 	gskrendernode.c \
 	gskrendernodeiter.c \
+	gskresourcecache.c \
 	gskshaderbuilder.c
 
 all_sources = \
