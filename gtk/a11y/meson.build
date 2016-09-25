@@ -28,8 +28,8 @@ a11y_sources = files([
   'gtklockbuttonaccessible.c',
   'gtkmenuaccessible.c',
   'gtkmenubuttonaccessible.c',
-  'gtkmenushellaccessible.c',
   'gtkmenuitemaccessible.c',
+  'gtkmenushellaccessible.c',
   'gtknotebookaccessible.c',
   'gtknotebookpageaccessible.c',
   'gtkpanedaccessible.c',
@@ -44,6 +44,7 @@ a11y_sources = files([
   'gtkscrolledwindowaccessible.c',
   'gtkspinbuttonaccessible.c',
   'gtkspinneraccessible.c',
+  'gtkstackaccessible.c',
   'gtkstatusbaraccessible.c',
   'gtkswitchaccessible.c',
   'gtktextcellaccessible.c',
@@ -53,7 +54,6 @@ a11y_sources = files([
   'gtktreeviewaccessible.c',
   'gtkwidgetaccessible.c',
   'gtkwindowaccessible.c',
-  'gtkstackaccessible.c'
 ])
 
 a11y_headers = files([
@@ -99,8 +99,8 @@ a11y_headers = files([
   'gtkscrolledwindowaccessible.h',
   'gtkspinbuttonaccessible.h',
   'gtkspinneraccessible.h',
-  'gtkstatusbaraccessible.h',
   'gtkstackaccessible.h',
+  'gtkstatusbaraccessible.h',
   'gtkswitchaccessible.h',
   'gtktextcellaccessible.h',
   'gtktextviewaccessible.h',

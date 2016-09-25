@@ -4238,6 +4238,9 @@ gtk_tree_view_motion_resize_column (GtkTreeView *tree_view,
   else
     new_width = MAX (x - tree_view->priv->x_drag, 0);
 
+
+  g_message ("new_width: %d", new_width);
+
   if (new_width != gtk_tree_view_column_get_fixed_width (column))
     gtk_tree_view_column_set_fixed_width (column, new_width);
 

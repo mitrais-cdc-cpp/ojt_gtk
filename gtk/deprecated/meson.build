@@ -1,7 +1,7 @@
 gtk_deprecated_sources = files(
-  'gtkactivatable.c',
   'gtkaction.c',
   'gtkactiongroup.c',
+  'gtkactivatable.c',
   'gtkalignment.c',
   'gtkarrow.c',
   'gtkcolorsel.c',
@@ -35,16 +35,16 @@ gtk_deprecated_sources = files(
   'gtkuimanager.c',
   'gtkvbbox.c',
   'gtkvbox.c',
+  'gtkvpaned.c',
   'gtkvscale.c',
   'gtkvscrollbar.c',
   'gtkvseparator.c',
-  'gtkvpaned.c',
 )
 
 gtk_deprecated_headers = files([
-  'gtkactivatable.h',
   'gtkaction.h',
   'gtkactiongroup.h',
+  'gtkactivatable.h',
   'gtkalignment.h',
   'gtkarrow.h',
   'gtkcolorsel.h',
@@ -78,8 +78,8 @@ gtk_deprecated_headers = files([
   'gtkuimanager.h',
   'gtkvbbox.h',
   'gtkvbox.h',
+  'gtkvpaned.h',
   'gtkvscale.h',
   'gtkvscrollbar.h',
   'gtkvseparator.h',
-  'gtkvpaned.h',
 ])

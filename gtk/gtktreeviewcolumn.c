@@ -2131,7 +2131,7 @@ _gtk_tree_view_column_allocate (GtkTreeViewColumn *tree_column,
     {
       rtl = (gtk_widget_get_direction (priv->tree_view) == GTK_TEXT_DIR_RTL);
       gdk_window_move_resize (priv->window,
-			      allocation.x + (rtl ? 0 : allocation.width) - TREE_VIEW_DRAG_WIDTH/2,
+			      allocation.x + (rtl ? 0 : width) - TREE_VIEW_DRAG_WIDTH/2,
 			      allocation.y,
 			      TREE_VIEW_DRAG_WIDTH, allocation.height);
     }
