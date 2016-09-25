@@ -10086,8 +10086,12 @@ _gtk_tree_view_column_start_drag (GtkTreeView       *tree_view,
 
   gtk_widget_get_allocation (button, &button_allocation);
   tree_view->priv->drag_column_x = button_allocation.x;
+  gtk_widget_get_preferred_width (button, NULL, &button_allocation.width);
+  gtk_widget_get_preferred_width_for_height (button, button_allocation.width,
+                                             NULL, &button_allocation.height);
   allocation = button_allocation;
   allocation.x = 0;
+  allocation.y =0;
   gtk_widget_size_allocate (button, &allocation);
 
   tree_view->priv->drag_column = column;
