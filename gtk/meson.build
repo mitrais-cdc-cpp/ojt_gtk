@@ -371,12 +371,12 @@ gtk_private_type_headers = files([
   'gtktexthandleprivate.h',
 ])
 
-gtk_private_h_sources = gtk_private_type_headers + files([
+gtk_private_headers = gtk_private_type_headers + files([
   'gtkrecentchooserutils.h',
   'gtkrbtree.h',
 ])
 
-gtk_public_h_sources = files([
+gtk_public_headers = files([
   'gtk.h',
   'gtk-autocleanups.h',
   'gtkx.h',
@@ -569,6 +569,7 @@ gtk_public_h_sources = files([
   'gtktextchild.h',
   'gtktextdisplay.h',
   'gtktextiter.h',
+  'gtktextlayout.h',
   'gtktextmark.h',
   'gtktexttag.h',
   'gtktexttagtable.h',
@@ -598,49 +599,6 @@ gtk_public_h_sources = files([
   'gtkwidgetpath.h',
   'gtkwindow.h',
   'gtkwindowgroup.h',
-])
-
-gtk_deprecated_type_headers = files([
-  'deprecated/gtkactivatable.h',
-  'deprecated/gtkaction.h',
-  'deprecated/gtkactiongroup.h',
-  'deprecated/gtkalignment.h',
-  'deprecated/gtkarrow.h',
-  'deprecated/gtkcolorsel.h',
-  'deprecated/gtkcolorseldialog.h',
-  'deprecated/gtkfontsel.h',
-  'deprecated/gtkgradient.h',
-  'deprecated/gtkhandlebox.h',
-  'deprecated/gtkhbbox.h',
-  'deprecated/gtkhbox.h',
-  'deprecated/gtkhpaned.h',
-  'deprecated/gtkhscale.h',
-  'deprecated/gtkhscrollbar.h',
-  'deprecated/gtkhseparator.h',
-  'deprecated/gtkhsv.h',
-  'deprecated/gtkiconfactory.h',
-  'deprecated/gtkimagemenuitem.h',
-  'deprecated/gtkmisc.h',
-  'deprecated/gtknumerableicon.h',
-  'deprecated/gtkradioaction.h',
-  'deprecated/gtkrc.h',
-  'deprecated/gtkrecentaction.h',
-  'deprecated/gtkstatusicon.h',
-  'deprecated/gtkstock.h',
-  'deprecated/gtkstyle.h',
-  'deprecated/gtkstyleproperties.h',
-  'deprecated/gtksymboliccolor.h',
-  'deprecated/gtktable.h',
-  'deprecated/gtktearoffmenuitem.h',
-  'deprecated/gtkthemingengine.h',
-  'deprecated/gtktoggleaction.h',
-  'deprecated/gtkuimanager.h',
-  'deprecated/gtkvbbox.h',
-  'deprecated/gtkvbox.h',
-  'deprecated/gtkvscale.h',
-  'deprecated/gtkvscrollbar.h',
-  'deprecated/gtkvseparator.h',
-  'deprecated/gtkvpaned.h',
 ])
 
 gtk_unix_sources = files([
@@ -705,19 +663,19 @@ gtkmarshal_c = custom_target(
   command : [mkmarshal, glib_marshal, '_gtk_marshal', '@INPUT@', '@OUTPUT@']
 )
 
-
-
 gtktypebuiltins_h = custom_target(
   'gtkypebuiltins_h',
   output  : 'gtktypebuiltins.h',
-  input   : gtk_public_h_sources + gtk_deprecated_type_headers,
-  command : [mkenum, perl, glib_mkenums, meson.current_source_dir() + '/gtktypebuiltins.h.template', '@OUTPUT@', '@INPUT@']
+  input   : gtk_public_headers + gtk_deprecated_headers,
+  command : [mkenum, perl, glib_mkenums, meson.current_source_dir() + '/gtktypebuiltins.h.template', '@OUTPUT@', '@INPUT@'],
+  install: true,
+  install_dir: 'include/gtk-3.0/gtk/' # XXX ???
 )
 
 gtktypebuiltins_c = custom_target(
   'gtkypebuiltins_c',
   output  : 'gtktypebuiltins.c',
-  input   : gtk_public_h_sources +  gtk_deprecated_type_headers,
+  input   : gtk_public_headers +  gtk_deprecated_headers,
   depends : gtktypebuiltins_h,
   command : [mkenum, perl, glib_mkenums, meson.current_source_dir() + '/gtktypebuiltins.c.template', '@OUTPUT@', '@INPUT@']
 )
@@ -743,7 +701,7 @@ typefuncs = custom_target(
   'typefuncs',
   depends: gdkenum_h,
   output : 'gtktypefuncs.c',
-  input  : gdk_headers + gtk_public_h_sources + gtk_deprecated_type_headers + gtk_private_h_sources + [gtktypebuiltins_h] + [gdkenum_h],
+  input  : gdk_headers + gtk_public_headers + gtk_deprecated_headers + gtk_private_headers + [gtktypebuiltins_h] + [gdkenum_h],
   command: [gentypefuncs_prog, '@OUTPUT@', '@INPUT@'],
   install: false,
 )
@@ -758,7 +716,8 @@ cdata.set('GTK_INTERFACE_AGE', gtk_interface_age)
 gtkversion = configure_file(
   input  : 'gtkversion.h.in',
   output : 'gtkversion.h',
-  configuration: cdata
+  configuration: cdata,
+  install_dir: 'include/gtk-3.0/gtk/' # XXX ???
 )
 
 gtk_cargs = [
@@ -775,7 +734,7 @@ gtk_cargs = [
 gtk_sources += [
   gtk_dbus_src,
   gtk_unix_sources,
-  gtk_deprecated_c_sources,
+  gtk_deprecated_sources,
   dnd_sources,
   inspector_sources,
   a11y_sources,
@@ -809,28 +768,31 @@ if x11_enabled
     error('Could not get x11 data prefix via pkg-config.')
   endif
 
-  gtk_sources += [
-    gtk_x11_sources,
-    gtk_use_wayland_or_x11_c_sources
-  ]
+  gtk_sources += gtk_x11_sources
   gtk_deps += [
     xi_dep,
     x11_dep,
-    pangoft_dep
   ]
 endif
 
 if wayland_enabled
-  gtk_sources += [
-    gtk_wayland_sources,
-    gtk_use_wayland_or_x11_c_sources
-  ]
-  gtk_deps += [
-    pangoft_dep
-  ]
+  gtk_sources += gtk_wayland_sources
+endif
+
+# So we don't add these twice
+if x11_enabled or wayland_enabled
+  gtk_sources += gtk_use_wayland_or_x11_c_sources
+  gtk_deps += pangoft_dep
 endif
 
 gnome.compile_schemas()
+
+
+# Install necessary headers
+
+install_headers(gtk_public_headers,     subdir: 'gtk-3.0/gtk/')
+install_headers(gtk_deprecated_headers, subdir: 'gtk-3.0/gtk/deprecated/')
+install_headers(a11y_headers,           subdir: 'gtk-3.0/gtk/a11y/')
 
 libgtk = shared_library('gtk',
   gtk_sources,

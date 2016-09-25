@@ -260,7 +260,7 @@ configure_file(
 
 subdir('gdk')
 subdir('gtk')
-subdir('demos')
-subdir('tests')
-subdir('testsuite')
-subdir('examples')
+# subdir('demos')
+# subdir('tests')
+# subdir('testsuite')
+# subdir('examples')

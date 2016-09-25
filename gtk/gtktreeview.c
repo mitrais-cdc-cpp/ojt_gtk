@@ -490,7 +490,7 @@ struct _GtkTreeViewPrivate
   guint enable_search : 1;
   guint disable_popdown : 1;
   guint search_custom_entry_set : 1;
-  
+
   guint hover_selection : 1;
   guint hover_expand : 1;
   guint imcontext_changed : 1;
@@ -1096,10 +1096,10 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
   /**
    * GtkTreeView:fixed-height-mode:
    *
-   * Setting the ::fixed-height-mode property to %TRUE speeds up 
-   * #GtkTreeView by assuming that all rows have the same height. 
-   * Only enable this option if all rows are the same height.  
-   * Please see gtk_tree_view_set_fixed_height_mode() for more 
+   * Setting the ::fixed-height-mode property to %TRUE speeds up
+   * #GtkTreeView by assuming that all rows have the same height.
+   * Only enable this option if all rows are the same height.
+   * Please see gtk_tree_view_set_fixed_height_mode() for more
    * information on this option.
    *
    * Since: 2.4
@@ -1113,10 +1113,10 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
 
   /**
    * GtkTreeView:hover-selection:
-   * 
+   *
    * Enables or disables the hover selection mode of @tree_view.
    * Hover selection makes the selected row follow the pointer.
-   * Currently, this works only for the selection modes 
+   * Currently, this works only for the selection modes
    * %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
    *
    * This mode is primarily intended for treeviews in popups, e.g.
@@ -1133,9 +1133,9 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
 
   /**
    * GtkTreeView:hover-expand:
-   * 
+   *
    * Enables or disables the hover expansion mode of @tree_view.
-   * Hover expansion makes rows expand or collapse if the pointer moves 
+   * Hover expansion makes rows expand or collapse if the pointer moves
    * over them.
    *
    * This mode is primarily intended for treeviews in popups, e.g.
@@ -1349,8 +1349,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * GtkTreeView::test-expand-row:
    * @tree_view: the object on which the signal is emitted
    * @iter: the tree iter of the row to expand
-   * @path: a tree path that points to the row 
-   * 
+   * @path: a tree path that points to the row
+   *
    * The given row is about to be expanded (show its children nodes). Use this
    * signal if you need to control the expandability of individual rows.
    *
@@ -1371,8 +1371,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * GtkTreeView::test-collapse-row:
    * @tree_view: the object on which the signal is emitted
    * @iter: the tree iter of the row to collapse
-   * @path: a tree path that points to the row 
-   * 
+   * @path: a tree path that points to the row
+   *
    * The given row is about to be collapsed (hide its children nodes). Use this
    * signal if you need to control the collapsibility of individual rows.
    *
@@ -1393,8 +1393,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * GtkTreeView::row-expanded:
    * @tree_view: the object on which the signal is emitted
    * @iter: the tree iter of the expanded row
-   * @path: a tree path that points to the row 
-   * 
+   * @path: a tree path that points to the row
+   *
    * The given row has been expanded (child nodes are shown).
    */
   tree_view_signals[ROW_EXPANDED] =
@@ -1412,8 +1412,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * GtkTreeView::row-collapsed:
    * @tree_view: the object on which the signal is emitted
    * @iter: the tree iter of the collapsed row
-   * @path: a tree path that points to the row 
-   * 
+   * @path: a tree path that points to the row
+   *
    * The given row has been collapsed (child nodes are hidden).
    */
   tree_view_signals[ROW_COLLAPSED] =
@@ -1429,8 +1429,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 
   /**
    * GtkTreeView::columns-changed:
-   * @tree_view: the object on which the signal is emitted 
-   * 
+   * @tree_view: the object on which the signal is emitted
+   *
    * The number of columns of the treeview has changed.
    */
   tree_view_signals[COLUMNS_CHANGED] =
@@ -1445,7 +1445,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   /**
    * GtkTreeView::cursor-changed:
    * @tree_view: the object on which the signal is emitted
-   * 
+   *
    * The position of the cursor (focused cell) has changed.
    */
   tree_view_signals[CURSOR_CHANGED] =
@@ -1818,9 +1818,9 @@ gtk_tree_view_init (GtkTreeView *tree_view)
   priv->search_equal_func = gtk_tree_view_search_equal_func;
   priv->search_custom_entry_set = FALSE;
   priv->typeselect_flush_timeout = 0;
-  priv->init_hadjust_value = TRUE;    
+  priv->init_hadjust_value = TRUE;
   priv->width = 0;
-          
+
   priv->hover_selection = FALSE;
   priv->hover_expand = FALSE;
 
@@ -2117,7 +2117,7 @@ gtk_tree_view_buildable_get_internal_child (GtkBuildable      *buildable,
 {
     if (strcmp (childname, "selection") == 0)
       return G_OBJECT (GTK_TREE_VIEW (buildable)->priv->selection);
-    
+
     return parent_buildable_iface->get_internal_child (buildable,
 						       builder,
 						       childname);
@@ -2262,7 +2262,7 @@ gtk_tree_view_destroy (GtkWidget *widget)
       tree_view->priv->row_separator_destroy (tree_view->priv->row_separator_data);
       tree_view->priv->row_separator_data = NULL;
     }
-  
+
   gtk_tree_view_set_model (tree_view, NULL);
 
   if (tree_view->priv->hadjustment)
@@ -2502,7 +2502,7 @@ gtk_tree_view_realize (GtkWidget *widget)
   gtk_tree_view_set_grid_lines (tree_view, tree_view->priv->grid_lines);
   gtk_tree_view_set_enable_tree_lines (tree_view, tree_view->priv->tree_lines_enabled);
 
-  install_presize_handler (tree_view); 
+  install_presize_handler (tree_view);
 
   gtk_gesture_set_window (tree_view->priv->multipress_gesture,
                           tree_view->priv->bin_window);
@@ -2558,7 +2558,7 @@ gtk_tree_view_unrealize (GtkWidget *widget)
       g_source_remove (priv->typeselect_flush_timeout);
       priv->typeselect_flush_timeout = 0;
     }
-  
+
   for (list = priv->columns; list; list = list->next)
     _gtk_tree_view_column_unrealize_button (GTK_TREE_VIEW_COLUMN (list->data));
 
@@ -2699,7 +2699,7 @@ gtk_tree_view_size_allocate_columns (GtkWidget *widget,
   gint number_of_expand_columns = 0;
   gboolean rtl;
   gboolean update_expand;
-  
+
   tree_view = GTK_TREE_VIEW (widget);
 
   for (last_column = g_list_last (tree_view->priv->columns);
@@ -2772,9 +2772,9 @@ gtk_tree_view_size_allocate_columns (GtkWidget *widget,
       tree_view->priv->last_number_of_expand_columns = number_of_expand_columns;
     }
 
-  for (list = (rtl ? last_column : first_column); 
+  for (list = (rtl ? last_column : first_column);
        list != (rtl ? first_column->prev : last_column->next);
-       list = (rtl ? list->prev : list->next)) 
+       list = (rtl ? list->prev : list->next))
     {
       gint column_width;
 
@@ -2886,7 +2886,7 @@ gtk_tree_view_size_allocate (GtkWidget     *widget,
                                  tree_view->priv->width));
   g_object_thaw_notify (G_OBJECT (tree_view->priv->hadjustment));
 
-  if (gtk_widget_get_direction(widget) == GTK_TEXT_DIR_RTL)   
+  if (gtk_widget_get_direction(widget) == GTK_TEXT_DIR_RTL)
     {
       if (allocation->width < tree_view->priv->width)
         {
@@ -2925,13 +2925,13 @@ gtk_tree_view_size_allocate (GtkWidget     *widget,
                             page_size * 0.1,
                             page_size * 0.9,
                             page_size);
- 
+
   /* now the adjustments and window sizes are in sync, we can sync toprow/dy again */
   if (gtk_tree_row_reference_valid (tree_view->priv->top_row))
     gtk_tree_view_top_row_to_dy (tree_view);
   else
     gtk_tree_view_dy_to_top_row (tree_view);
-  
+
   if (gtk_widget_get_realized (widget))
     {
       gdk_window_move_resize (gtk_widget_get_window (widget),
@@ -3826,7 +3826,7 @@ do_prelight (GtkTreeView *tree_view,
 	  && gtk_tree_view_draw_expanders (tree_view))
 	{
           tree_view->priv->arrow_prelit = FALSE;
-	  
+
 	  gtk_tree_view_queue_draw_arrow (tree_view,
                                           tree_view->priv->prelight_tree,
                                           tree_view->priv->prelight_node);
@@ -3865,7 +3865,7 @@ do_prelight (GtkTreeView *tree_view,
 
   if (tree_view->priv->hover_expand)
     {
-      tree_view->priv->auto_expand_timeout = 
+      tree_view->priv->auto_expand_timeout =
 	gdk_threads_add_timeout (AUTO_EXPAND_TIMEOUT, auto_expand_timeout, tree_view);
       g_source_set_name_by_id (tree_view->priv->auto_expand_timeout, "[gtk+] auto_expand_timeout");
     }
@@ -3880,11 +3880,11 @@ prelight_or_select (GtkTreeView *tree_view,
 		    gint         y)
 {
   GtkSelectionMode mode = gtk_tree_selection_get_mode (tree_view->priv->selection);
-  
+
   if (tree_view->priv->hover_selection &&
       (mode == GTK_SELECTION_SINGLE || mode == GTK_SELECTION_BROWSE) &&
       !(tree_view->priv->edited_column &&
-	gtk_cell_area_get_edit_widget 
+	gtk_cell_area_get_edit_widget
 	(gtk_cell_layout_get_area (GTK_CELL_LAYOUT (tree_view->priv->edited_column)))))
     {
       if (node)
@@ -3892,7 +3892,7 @@ prelight_or_select (GtkTreeView *tree_view,
 	  if (!GTK_RBNODE_FLAG_SET (node, GTK_RBNODE_IS_SELECTED))
 	    {
 	      GtkTreePath *path;
-	      
+
 	      path = _gtk_tree_path_new_from_rbtree (tree, node);
 	      gtk_tree_selection_select_path (tree_view->priv->selection, path);
 	      if (GTK_RBNODE_FLAG_SET (node, GTK_RBNODE_IS_SELECTED))
@@ -4957,7 +4957,7 @@ gtk_tree_view_draw_line (GtkTreeView         *tree_view,
 
   cairo_restore (cr);
 }
-                         
+
 static void
 gtk_tree_view_draw_grid_lines (GtkTreeView    *tree_view,
 			       cairo_t        *cr)
@@ -5088,7 +5088,7 @@ gtk_tree_view_bin_draw (GtkWidget      *widget,
 			   path);
   depth = gtk_tree_path_get_depth (path);
   gtk_tree_path_free (path);
-  
+
   drag_dest_path = NULL;
 
   if (tree_view->priv->drag_dest_row)
@@ -5108,7 +5108,7 @@ gtk_tree_view_bin_draw (GtkWidget      *widget,
 
   if (draw_vgrid_lines || draw_hgrid_lines)
     gtk_widget_style_get (widget, "grid-line-width", &grid_line_width, NULL);
-  
+
   n_visible_columns = 0;
   for (list = tree_view->priv->columns; list; list = list->next)
     {
@@ -5135,7 +5135,7 @@ gtk_tree_view_bin_draw (GtkWidget      *widget,
    * start at the first node of the event, and walk the tree in
    * order, drawing each successive node.
    */
-  
+
   parity = !(_gtk_rbtree_node_get_index (tree, node) % 2);
 
   do
@@ -5692,7 +5692,7 @@ gtk_tree_view_draw (GtkWidget *widget,
   if (gtk_cairo_should_draw_window (cr, tree_view->priv->header_window))
     {
       GList *list;
-      
+
       for (list = tree_view->priv->columns; list != NULL; list = list->next)
 	{
 	  GtkTreeViewColumn *column = list->data;
@@ -5708,7 +5708,7 @@ gtk_tree_view_draw (GtkWidget *widget,
 	    }
 	}
     }
-  
+
   if (tree_view->priv->drag_window &&
       gtk_cairo_should_draw_window (cr, tree_view->priv->drag_window))
     {
@@ -5980,7 +5980,7 @@ gtk_tree_view_key_press (GtkWidget   *widget,
            focus_column = focus_column->next)
         {
           GtkTreeViewColumn *column = GTK_TREE_VIEW_COLUMN (focus_column->data);
-	  
+
 	  button = gtk_tree_view_column_get_button (column);
           if (gtk_widget_has_focus (button))
             break;
@@ -6342,7 +6342,7 @@ validate_row (GtkTreeView *tree_view,
 			"vertical-separator", &vertical_separator,
 			"grid-line-width", &grid_line_width,
 			NULL);
-  
+
   draw_vgrid_lines =
     tree_view->priv->grid_lines == GTK_TREE_VIEW_GRID_LINES_VERTICAL
     || tree_view->priv->grid_lines == GTK_TREE_VIEW_GRID_LINES_BOTH;
@@ -6379,7 +6379,7 @@ validate_row (GtkTreeView *tree_view,
       if (!gtk_tree_view_column_get_visible (column))
 	continue;
 
-      if (GTK_RBNODE_FLAG_SET (node, GTK_RBNODE_COLUMN_INVALID) && 
+      if (GTK_RBNODE_FLAG_SET (node, GTK_RBNODE_COLUMN_INVALID) &&
 	  !_gtk_tree_view_column_cell_get_dirty (column))
 	continue;
 
@@ -6570,7 +6570,7 @@ validate_visible_area (GtkTreeView *tree_view)
 	  if (path)
 	    gtk_tree_path_free (path);
 	  path = NULL;
-	}      
+	}
     }
 
   /* We didn't have a scroll_to set, so we just handle things normally
@@ -6986,7 +6986,7 @@ do_validate_rows (GtkTreeView *tree_view, gboolean queue_resize)
 
      tree_view->priv->fixed_height_check = 1;
    }
-  
+
  done:
   if (validated_area)
     {
@@ -7001,7 +7001,7 @@ do_validate_rows (GtkTreeView *tree_view, gboolean queue_resize)
        * recursing, we cannot call gtk_widget_get_preferred_size() here because that's
        * not allowed (from inside ->get_preferred_width/height() implementations, one
        * should call the vfuncs directly). However what is desired here is the full
-       * size including any margins and limited by any alignment (i.e. after 
+       * size including any margins and limited by any alignment (i.e. after
        * GtkWidget:adjust_size_request() is called).
        *
        * Currently bypassing this but the real solution is to not update the scroll adjustments
@@ -7099,7 +7099,7 @@ presize_handler_callback (GtkWidget     *widget,
                           gpointer       unused)
 {
   do_presize_handler (GTK_TREE_VIEW (widget));
-		   
+
   return G_SOURCE_REMOVE;
 }
 
@@ -7107,7 +7107,7 @@ static gboolean
 validate_rows (GtkTreeView *tree_view)
 {
   gboolean retval;
-  
+
   if (tree_view->priv->presize_handler_tick_cb)
     {
       do_presize_handler (tree_view);
@@ -7115,7 +7115,7 @@ validate_rows (GtkTreeView *tree_view)
     }
 
   retval = do_validate_rows (tree_view, TRUE);
-  
+
   if (! retval && tree_view->priv->validate_rows_timer)
     {
       g_source_remove (tree_view->priv->validate_rows_timer);
@@ -8451,23 +8451,23 @@ column_sizing_notify (GObject    *object,
 
 /**
  * gtk_tree_view_set_fixed_height_mode:
- * @tree_view: a #GtkTreeView 
+ * @tree_view: a #GtkTreeView
  * @enable: %TRUE to enable fixed height mode
- * 
- * Enables or disables the fixed height mode of @tree_view. 
- * Fixed height mode speeds up #GtkTreeView by assuming that all 
- * rows have the same height. 
+ *
+ * Enables or disables the fixed height mode of @tree_view.
+ * Fixed height mode speeds up #GtkTreeView by assuming that all
+ * rows have the same height.
  * Only enable this option if all rows are the same height and all
  * columns are of type %GTK_TREE_VIEW_COLUMN_FIXED.
  *
- * Since: 2.6 
+ * Since: 2.6
  **/
 void
 gtk_tree_view_set_fixed_height_mode (GtkTreeView *tree_view,
                                      gboolean     enable)
 {
   GList *l;
-  
+
   enable = enable != FALSE;
 
   if (enable == tree_view->priv->fixed_height_mode)
@@ -8478,21 +8478,21 @@ gtk_tree_view_set_fixed_height_mode (GtkTreeView *tree_view,
       tree_view->priv->fixed_height_mode = 0;
       tree_view->priv->fixed_height = -1;
     }
-  else 
+  else
     {
       /* make sure all columns are of type FIXED */
       for (l = tree_view->priv->columns; l; l = l->next)
 	{
 	  GtkTreeViewColumn *c = l->data;
-	  
+
 	  g_return_if_fail (gtk_tree_view_column_get_sizing (c) == GTK_TREE_VIEW_COLUMN_FIXED);
 	}
-      
+
       /* yes, we really have to do this is in a separate loop */
       for (l = tree_view->priv->columns; l; l = l->next)
 	g_signal_connect (l->data, "notify::sizing",
 			  G_CALLBACK (column_sizing_notify), tree_view);
-      
+
       tree_view->priv->fixed_height_mode = 1;
       tree_view->priv->fixed_height = -1;
     }
@@ -8506,11 +8506,11 @@ gtk_tree_view_set_fixed_height_mode (GtkTreeView *tree_view,
 /**
  * gtk_tree_view_get_fixed_height_mode:
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns whether fixed height mode is turned on for @tree_view.
- * 
+ *
  * Returns: %TRUE if @tree_view is in fixed height mode
- * 
+ *
  * Since: 2.6
  **/
 gboolean
@@ -8585,7 +8585,7 @@ gtk_tree_view_header_focus (GtkTreeView      *tree_view,
 	{
 	  if (tree_view->priv->focus_column != NULL)
 	    button = gtk_tree_view_column_get_button (tree_view->priv->focus_column);
-	  else 
+	  else
 	    button = NULL;
 
 	  if (button && gtk_widget_get_can_focus (button))
@@ -8921,7 +8921,7 @@ gtk_tree_view_put (GtkTreeView       *tree_view,
                    const GtkBorder   *border)
 {
   GtkTreeViewChild *child;
-  
+
   g_return_if_fail (GTK_IS_TREE_VIEW (tree_view));
   g_return_if_fail (GTK_IS_WIDGET (child_widget));
 
@@ -8942,7 +8942,7 @@ gtk_tree_view_put (GtkTreeView       *tree_view,
 
   if (gtk_widget_get_realized (GTK_WIDGET (tree_view)))
     gtk_widget_set_parent_window (child->widget, tree_view->priv->bin_window);
-  
+
   gtk_widget_set_parent (child_widget, GTK_WIDGET (tree_view));
 }
 
@@ -9308,7 +9308,7 @@ gtk_tree_view_row_deleted (GtkTreeModel *model,
         cursor_path = NULL;
 
       if (cursor_path == NULL ||
-          ! search_first_focusable_path (tree_view, &cursor_path, TRUE, 
+          ! search_first_focusable_path (tree_view, &cursor_path, TRUE,
                                          &cursor_tree, &cursor_node))
         {
           /* It looks like we reached the end of the view without finding
@@ -9841,7 +9841,7 @@ gtk_tree_view_add_move_binding (GtkBindingSet  *binding_set,
 				GtkMovementStep step,
 				gint            count)
 {
-  
+
   gtk_binding_entry_add_signal (binding_set, keyval, modmask,
                                 "move-cursor", 2,
                                 G_TYPE_ENUM, step,
@@ -9992,7 +9992,7 @@ gtk_tree_view_set_column_drag_info (GtkTreeView       *tree_view,
 
   /* We know there are always 2 slots possbile, as you can always return column. */
   /* If that's all there is, return */
-  if (tree_view->priv->column_drag_info->next == NULL || 
+  if (tree_view->priv->column_drag_info->next == NULL ||
       (tree_view->priv->column_drag_info->next->next == NULL &&
        ((GtkTreeViewColumnReorder *)tree_view->priv->column_drag_info->data)->right_column == column &&
        ((GtkTreeViewColumnReorder *)tree_view->priv->column_drag_info->next->data)->left_column == column))
@@ -10213,7 +10213,7 @@ _gtk_tree_view_set_anchor_path (GtkTreeView *tree_view,
 
   if (anchor_path && tree_view->priv->model)
     tree_view->priv->anchor =
-      gtk_tree_row_reference_new_proxy (G_OBJECT (tree_view), 
+      gtk_tree_row_reference_new_proxy (G_OBJECT (tree_view),
 					tree_view->priv->model, anchor_path);
 }
 
@@ -10264,7 +10264,7 @@ _gtk_tree_view_set_focus_column (GtkTreeView       *tree_view,
 
   tree_view->priv->focus_column = column;
 
-  _gtk_tree_view_accessible_update_focus_column (tree_view, 
+  _gtk_tree_view_accessible_update_focus_column (tree_view,
                                                  old_column,
                                                  column);
 }
@@ -10557,7 +10557,7 @@ gtk_tree_view_move_cursor_up_down (GtkTreeView *tree_view,
     }
   else
     {
-      gtk_tree_view_clamp_node_visible (tree_view, 
+      gtk_tree_view_clamp_node_visible (tree_view,
                                         tree_view->priv->cursor_tree,
                                         tree_view->priv->cursor_node);
 
@@ -10952,7 +10952,7 @@ gtk_tree_view_real_select_cursor_row (GtkTreeView *tree_view,
   if (!tree_view->priv->extend_selection_pressed)
     gtk_tree_view_row_activated (tree_view, cursor_path,
                                  tree_view->priv->focus_column);
-    
+
   gtk_tree_path_free (cursor_path);
 
   return TRUE;
@@ -11177,7 +11177,7 @@ gtk_tree_view_ensure_interactive_directory (GtkTreeView *tree_view)
 
        return;
      }
-   
+
   tree_view->priv->search_window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_screen (GTK_WINDOW (tree_view->priv->search_window), screen);
 
@@ -11240,7 +11240,7 @@ gtk_tree_view_ensure_interactive_directory (GtkTreeView *tree_view)
 }
 
 /* Pops up the interactive search entry.  If keybinding is TRUE then the user
- * started this by typing the start_interactive_search keybinding.  Otherwise, it came from 
+ * started this by typing the start_interactive_search keybinding.  Otherwise, it came from
  */
 static gboolean
 gtk_tree_view_real_start_interactive_search (GtkTreeView *tree_view,
@@ -11280,7 +11280,7 @@ gtk_tree_view_real_start_interactive_search (GtkTreeView *tree_view,
 	  break;
 	}
     }
-  
+
   if (gtk_widget_has_focus (GTK_WIDGET (tree_view)))
     found_focus = TRUE;
 
@@ -11341,7 +11341,7 @@ gtk_tree_view_adjustment_changed (GtkAdjustment *adjustment,
   if (gtk_widget_get_realized (GTK_WIDGET (tree_view)))
     {
       gint dy;
-	
+
       gdk_window_move (tree_view->priv->bin_window,
 		       - gtk_adjustment_get_value (tree_view->priv->hadjustment),
 		       gtk_tree_view_get_effective_header_height (tree_view));
@@ -11900,11 +11900,11 @@ gtk_tree_view_set_headers_clickable (GtkTreeView *tree_view,
  *
  * Since: 2.10
  **/
-gboolean 
+gboolean
 gtk_tree_view_get_headers_clickable (GtkTreeView *tree_view)
 {
   GList *list;
-  
+
   g_return_val_if_fail (GTK_IS_TREE_VIEW (tree_view), FALSE);
 
   for (list = tree_view->priv->columns; list; list = list->next)
@@ -12408,11 +12408,11 @@ gtk_tree_view_move_column_after (GtkTreeView       *tree_view,
  * @tree_view: A #GtkTreeView
  * @column: %NULL, or the column to draw the expander arrow at.
  *
- * Sets the column to draw the expander arrow at. It must be in @tree_view.  
- * If @column is %NULL, then the expander arrow is always at the first 
+ * Sets the column to draw the expander arrow at. It must be in @tree_view.
+ * If @column is %NULL, then the expander arrow is always at the first
  * visible column.
  *
- * If you do not want expander arrow to appear in your tree, set the 
+ * If you do not want expander arrow to appear in your tree, set the
  * expander column to a hidden column.
  **/
 void
@@ -13019,7 +13019,7 @@ gtk_tree_view_real_collapse_row (GtkTreeView *tree_view,
     }
 
   selection_changed = gtk_tree_view_unref_and_check_selection_tree (tree_view, node->children);
-  
+
   /* Stop a pending double click */
   gtk_event_controller_reset (GTK_EVENT_CONTROLLER (tree_view->priv->multipress_gesture));
 
@@ -13041,7 +13041,7 @@ gtk_tree_view_real_collapse_row (GtkTreeView *tree_view,
     }
 
   g_signal_emit (tree_view, tree_view_signals[ROW_COLLAPSED], 0, &iter, path);
-  
+
   if (gtk_widget_get_mapped (GTK_WIDGET (tree_view)))
     update_prelight (tree_view,
                      tree_view->priv->event_last_x,
@@ -13262,7 +13262,7 @@ gtk_tree_view_real_set_cursor (GtkTreeView     *tree_view,
    * path maps to a non-existing path and we will silently bail out.
    * We unset tree and node to avoid further processing.
    */
-  if (path == NULL || 
+  if (path == NULL ||
       row_is_separator (tree_view, NULL, path)
       || _gtk_tree_view_find_node (tree_view,
                                    path,
@@ -13370,11 +13370,11 @@ gtk_tree_view_get_cursor (GtkTreeView        *tree_view,
  *
  * Sets the current keyboard focus to be at @path, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular row.  If
- * @focus_column is not %NULL, then focus is given to the column specified by 
- * it. Additionally, if @focus_column is specified, and @start_editing is 
- * %TRUE, then editing should be started in the specified cell.  
- * This function is often followed by @gtk_widget_grab_focus (@tree_view) 
- * in order to give keyboard focus to the widget.  Please note that editing 
+ * @focus_column is not %NULL, then focus is given to the column specified by
+ * it. Additionally, if @focus_column is specified, and @start_editing is
+ * %TRUE, then editing should be started in the specified cell.
+ * This function is often followed by @gtk_widget_grab_focus (@tree_view)
+ * in order to give keyboard focus to the widget.  Please note that editing
  * can only happen when the widget is realized.
  *
  * If @path is invalid for @model, the current cursor (if any) will be unset
@@ -13595,7 +13595,7 @@ gtk_tree_view_get_path_at_pos (GtkTreeView        *tree_view,
 	    {
 	      if (column)
 		*column = last_column;
-	      
+
 	      if (cell_x)
 		*cell_x = gtk_tree_view_column_get_width (last_column) + remaining_x;
 	    }
@@ -14084,7 +14084,7 @@ gtk_tree_view_get_visible_range (GtkTreeView  *tree_view,
   GtkRBTree *tree;
   GtkRBNode *node;
   gboolean retval;
-  
+
   g_return_val_if_fail (GTK_IS_TREE_VIEW (tree_view), FALSE);
 
   if (!tree_view->priv->tree)
@@ -14281,7 +14281,7 @@ gtk_tree_view_enable_model_drag_source (GtkTreeView              *tree_view,
  * @n_targets: the number of items in @targets
  * @actions: the bitmask of possible actions for a drag from this
  *    widget
- * 
+ *
  * Turns @tree_view into a drop destination for automatic DND. Calling
  * this method sets #GtkTreeView:reorderable to %FALSE.
  **/
@@ -14335,7 +14335,7 @@ gtk_tree_view_unset_rows_drag_source (GtkTreeView *tree_view)
       if (!di->dest_set && !di->source_set)
         remove_info (tree_view);
     }
-  
+
   unset_reorderable (tree_view);
 }
 
@@ -14455,7 +14455,7 @@ gtk_tree_view_set_drag_dest_row (GtkTreeView            *tree_view,
  * @tree_view: a #GtkTreeView
  * @path: (out) (optional) (nullable): Return location for the path of the highlighted row, or %NULL.
  * @pos: (out) (optional): Return location for the drop position, or %NULL
- * 
+ *
  * Gets information about the row that is highlighted for feedback.
  **/
 void
@@ -14491,12 +14491,12 @@ gtk_tree_view_get_drag_dest_row (GtkTreeView              *tree_view,
  *   the highlighted row, or %NULL.
  * @pos: (out) (optional): Return location for the drop position, or
  *   %NULL
- * 
+ *
  * Determines the destination row for a given position.  @drag_x and
  * @drag_y are expected to be in widget coordinates.  This function is only
  * meaningful if @tree_view is realized.  Therefore this function will always
  * return %FALSE if @tree_view is not realized or does not have a model.
- * 
+ *
  * Returns: whether there is a row at the given position, %TRUE if this
  * is indeed the case.
  **/
@@ -14593,7 +14593,7 @@ gtk_tree_view_get_dest_row_at_pos (GtkTreeView             *tree_view,
  * @tree_view: a #GtkTreeView
  * @path: a #GtkTreePath in @tree_view
  *
- * Creates a #cairo_surface_t representation of the row at @path.  
+ * Creates a #cairo_surface_t representation of the row at @path.
  * This image is used for a drag icon.
  *
  * Returns: (transfer full): a newly-allocated surface of the drag icon.
@@ -14736,8 +14736,8 @@ gtk_tree_view_create_row_drag_icon (GtkTreeView  *tree_view,
     }
 
   cairo_set_source_rgb (cr, 0, 0, 0);
-  cairo_rectangle (cr, 
-                   0.5, 0.5, 
+  cairo_rectangle (cr,
+                   0.5, 0.5,
                    bin_window_width + 1,
                    background_area.height + 1);
   cairo_set_line_width (cr, 1.0);
@@ -14792,8 +14792,8 @@ gtk_tree_view_set_destroy_count_func (GtkTreeView             *tree_view,
  *
  * If @enable_search is set, then the user can type in text to search through
  * the tree interactively (this is sometimes called "typeahead find").
- * 
- * Note that even if this is %FALSE, the user can still initiate a search 
+ *
+ * Note that even if this is %FALSE, the user can still initiate a search
  * using the “start-interactive-search” key binding.
  */
 void
@@ -14803,7 +14803,7 @@ gtk_tree_view_set_enable_search (GtkTreeView *tree_view,
   g_return_if_fail (GTK_IS_TREE_VIEW (tree_view));
 
   enable_search = !!enable_search;
-  
+
   if (tree_view->priv->enable_search != enable_search)
     {
        tree_view->priv->enable_search = enable_search;
@@ -14815,7 +14815,7 @@ gtk_tree_view_set_enable_search (GtkTreeView *tree_view,
  * gtk_tree_view_get_enable_search:
  * @tree_view: A #GtkTreeView
  *
- * Returns whether or not the tree allows to start interactive searching 
+ * Returns whether or not the tree allows to start interactive searching
  * by typing in text.
  *
  * Returns: whether or not to let the user search interactively
@@ -14851,13 +14851,13 @@ gtk_tree_view_get_search_column (GtkTreeView *tree_view)
  * @column: the column of the model to search in, or -1 to disable searching
  *
  * Sets @column as the column where the interactive search code should
- * search in for the current model. 
- * 
+ * search in for the current model.
+ *
  * If the search column is set, users can use the “start-interactive-search”
  * key binding to bring up search popup. The enable-search property controls
  * whether simply typing text will also start an interactive search.
  *
- * Note that @column refers to a column of the current model. The search 
+ * Note that @column refers to a column of the current model. The search
  * column is reset to -1 when the model is changed.
  */
 void
@@ -14995,7 +14995,7 @@ gtk_tree_view_set_search_entry (GtkTreeView *tree_view,
 			      G_CALLBACK (gtk_tree_view_search_init),
 			      tree_view);
 	}
-      
+
         g_signal_connect (tree_view->priv->search_entry, "key-press-event",
 		          G_CALLBACK (gtk_tree_view_search_key_press_event),
 		          tree_view);
@@ -15077,7 +15077,7 @@ gtk_tree_view_search_window_hide (GtkWidget   *search_window,
       g_source_remove (tree_view->priv->typeselect_flush_timeout);
       tree_view->priv->typeselect_flush_timeout = 0;
     }
-	
+
   if (gtk_widget_get_visible (search_window))
     {
       /* send focus-in event */
@@ -15187,9 +15187,9 @@ gtk_tree_view_search_activate (GtkEntry    *entry,
     {
       path = _gtk_tree_path_new_from_rbtree (tree_view->priv->cursor_tree,
                                              tree_view->priv->cursor_node);
-      
+
       gtk_tree_view_row_activated (tree_view, path, tree_view->priv->focus_column);
-      
+
       gtk_tree_path_free (path);
     }
 }
@@ -15741,12 +15741,12 @@ gtk_tree_view_stop_editing (GtkTreeView *tree_view,
  *
  * Enables or disables the hover selection mode of @tree_view.
  * Hover selection makes the selected row follow the pointer.
- * Currently, this works only for the selection modes 
+ * Currently, this works only for the selection modes
  * %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
- * 
+ *
  * Since: 2.6
  **/
-void     
+void
 gtk_tree_view_set_hover_selection (GtkTreeView *tree_view,
 				   gboolean     hover)
 {
@@ -15763,14 +15763,14 @@ gtk_tree_view_set_hover_selection (GtkTreeView *tree_view,
 /**
  * gtk_tree_view_get_hover_selection:
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns whether hover selection mode is turned on for @tree_view.
- * 
+ *
  * Returns: %TRUE if @tree_view is in hover selection mode
  *
- * Since: 2.6 
+ * Since: 2.6
  **/
-gboolean 
+gboolean
 gtk_tree_view_get_hover_selection (GtkTreeView *tree_view)
 {
   return tree_view->priv->hover_selection;
@@ -15782,12 +15782,12 @@ gtk_tree_view_get_hover_selection (GtkTreeView *tree_view)
  * @expand: %TRUE to enable hover selection mode
  *
  * Enables or disables the hover expansion mode of @tree_view.
- * Hover expansion makes rows expand or collapse if the pointer 
+ * Hover expansion makes rows expand or collapse if the pointer
  * moves over them.
- * 
+ *
  * Since: 2.6
  **/
-void     
+void
 gtk_tree_view_set_hover_expand (GtkTreeView *tree_view,
 				gboolean     expand)
 {
@@ -15804,14 +15804,14 @@ gtk_tree_view_set_hover_expand (GtkTreeView *tree_view,
 /**
  * gtk_tree_view_get_hover_expand:
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns whether hover expansion mode is turned on for @tree_view.
- * 
+ *
  * Returns: %TRUE if @tree_view is in hover expansion mode
  *
- * Since: 2.6 
+ * Since: 2.6
  **/
-gboolean 
+gboolean
 gtk_tree_view_get_hover_expand (GtkTreeView *tree_view)
 {
   return tree_view->priv->hover_expand;
@@ -15825,7 +15825,7 @@ gtk_tree_view_get_hover_expand (GtkTreeView *tree_view)
  * Enables or disables rubber banding in @tree_view.  If the selection mode
  * is #GTK_SELECTION_MULTIPLE, rubber banding will allow the user to select
  * multiple rows by dragging the mouse.
- * 
+ *
  * Since: 2.10
  **/
 void
@@ -15845,11 +15845,11 @@ gtk_tree_view_set_rubber_banding (GtkTreeView *tree_view,
 /**
  * gtk_tree_view_get_rubber_banding:
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns whether rubber banding is turned on for @tree_view.  If the
  * selection mode is #GTK_SELECTION_MULTIPLE, rubber banding will allow the
  * user to select multiple rows by dragging the mouse.
- * 
+ *
  * Returns: %TRUE if rubber banding in @tree_view is enabled.
  *
  * Since: 2.10
@@ -15863,7 +15863,7 @@ gtk_tree_view_get_rubber_banding (GtkTreeView *tree_view)
 /**
  * gtk_tree_view_is_rubber_banding_active:
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns whether a rubber banding operation is currently being done
  * in @tree_view.
  *
@@ -15887,14 +15887,14 @@ gtk_tree_view_is_rubber_banding_active (GtkTreeView *tree_view)
 /**
  * gtk_tree_view_get_row_separator_func: (skip)
  * @tree_view: a #GtkTreeView
- * 
+ *
  * Returns the current row separator function.
- * 
+ *
  * Returns: the current row separator function.
  *
  * Since: 2.6
  **/
-GtkTreeViewRowSeparatorFunc 
+GtkTreeViewRowSeparatorFunc
 gtk_tree_view_get_row_separator_func (GtkTreeView *tree_view)
 {
   g_return_val_if_fail (GTK_IS_TREE_VIEW (tree_view), NULL);
@@ -15908,7 +15908,7 @@ gtk_tree_view_get_row_separator_func (GtkTreeView *tree_view)
  * @func: (allow-none): a #GtkTreeViewRowSeparatorFunc
  * @data: (allow-none): user data to pass to @func, or %NULL
  * @destroy: (allow-none): destroy notifier for @data, or %NULL
- * 
+ *
  * Sets the row separator function, which is used to determine
  * whether a row should be drawn as a separator. If the row separator
  * function is %NULL, no separators are drawn. This is the default value.
@@ -15979,7 +15979,7 @@ gtk_tree_view_set_grid_lines (GtkTreeView           *tree_view,
 
   old_grid_lines = priv->grid_lines;
   priv->grid_lines = grid_lines;
-  
+
   if (gtk_widget_get_realized (widget))
     {
       if (grid_lines == GTK_TREE_VIEW_GRID_LINES_NONE &&
@@ -15987,8 +15987,8 @@ gtk_tree_view_set_grid_lines (GtkTreeView           *tree_view,
 	{
 	  priv->grid_line_width = 0;
 	}
-      
-      if (grid_lines != GTK_TREE_VIEW_GRID_LINES_NONE && 
+
+      if (grid_lines != GTK_TREE_VIEW_GRID_LINES_NONE &&
 	  !priv->grid_line_width)
 	{
 	  gint8 *dash_list;
@@ -15997,13 +15997,13 @@ gtk_tree_view_set_grid_lines (GtkTreeView           *tree_view,
 				"grid-line-width", &priv->grid_line_width,
 				"grid-line-pattern", (gchar *)&dash_list,
 				NULL);
-      
+
           if (dash_list)
             {
               priv->grid_line_dashes[0] = dash_list[0];
               if (dash_list[0])
                 priv->grid_line_dashes[1] = dash_list[1];
-	      
+
               g_free (dash_list);
             }
           else
@@ -16011,13 +16011,13 @@ gtk_tree_view_set_grid_lines (GtkTreeView           *tree_view,
               priv->grid_line_dashes[0] = 1;
               priv->grid_line_dashes[1] = 1;
             }
-	}      
+	}
     }
 
   if (old_grid_lines != grid_lines)
     {
       gtk_widget_queue_draw (GTK_WIDGET (tree_view));
-      
+
       g_object_notify_by_pspec (G_OBJECT (tree_view), tree_view_props[PROP_ENABLE_GRID_LINES]);
     }
 }
@@ -16076,7 +16076,7 @@ gtk_tree_view_set_enable_tree_lines (GtkTreeView *tree_view,
 	{
           priv->tree_line_width = 0;
 	}
-      
+
       if (enabled && !priv->tree_line_width)
 	{
 	  gint8 *dash_list;
@@ -16084,13 +16084,13 @@ gtk_tree_view_set_enable_tree_lines (GtkTreeView *tree_view,
 				"tree-line-width", &priv->tree_line_width,
 				"tree-line-pattern", (gchar *)&dash_list,
 				NULL);
-	  
+
           if (dash_list)
             {
               priv->tree_line_dashes[0] = dash_list[0];
               if (dash_list[0])
                 priv->tree_line_dashes[1] = dash_list[1];
-	      
+
               g_free (dash_list);
             }
           else

@@ -1,4 +1,3 @@
-deprecated_gdk_sources = ['deprecated/gdkcolor.c']
 gdk_sources = files([
   'gdk-private.c',
   'gdk.c',
@@ -86,7 +85,7 @@ gdk_private_h_sources = files([
   'gdkprivate.h',
 ])
 
-gdk_x_sources = [
+gdk_x_sources = files([
   'x11/MwmUtil.h',
   'x11/gdkapplaunchcontext-x11.c',
   'x11/gdkasync.c',
@@ -126,12 +125,36 @@ gdk_x_sources = [
   'x11/gdkmonitor-x11.c',
   'x11/gdkmonitor-x11.h',
   'x11/gdkx11monitor.h'
-]
+])
 
-gdk_x_private_sources = [
+gdk_x_private_sources = files([
   'x11/gdkprivate-x11.h',
   'x11/gdkdevicemanagerprivate-core.h',
-]
+])
+
+gdk_x_public_headers = files([
+  'x11/gdkx-autocleanups.h',
+  'x11/gdkx11applaunchcontext.h',
+  'x11/gdkx11cursor.h',
+  'x11/gdkx11device.h',
+  'x11/gdkx11device-core.h',
+  'x11/gdkx11device-xi2.h',
+  'x11/gdkx11devicemanager.h',
+  'x11/gdkx11devicemanager-core.h',
+  'x11/gdkx11devicemanager-xi2.h',
+  'x11/gdkx11display.h',
+  'x11/gdkx11displaymanager.h',
+  'x11/gdkx11dnd.h',
+  'x11/gdkx11glcontext.h',
+  'x11/gdkx11keys.h',
+  'x11/gdkx11monitor.h',
+  'x11/gdkx11property.h',
+  'x11/gdkx11screen.h',
+  'x11/gdkx11selection.h',
+  'x11/gdkx11utils.h',
+  'x11/gdkx11visual.h',
+  'x11/gdkx11window.h',
+])
 
 gdk_wayland_sources = files([
   'wayland/gdkapplaunchcontext-wayland.c',
@@ -158,6 +181,14 @@ gdk_wayland_sources = files([
   'wayland/gdkwaylandwindow.h',
   'wayland/gdkwindow-wayland.c',
   'wayland/wm-button-layout-translation.c',
+])
+
+gdk_wayland_public_headers = files([
+  'wayland/gdkwaylanddevice.h',
+  'wayland/gdkwaylanddisplay.h',
+  'wayland/gdkwaylandglcontext.h',
+  'wayland/gdkwaylandselection.h',
+  'wayland/gdkwaylandwindow.h'
 ])
 
 gdk_wayland_private_sources = files([
@@ -238,6 +269,7 @@ gdkresources = gnome.compile_resources(
 )
 
 
+deprecated_gdk_sources = ['deprecated/gdkcolor.c']
 deprecated_h_sources = files(['deprecated/gdkcolor.h'])
 
 gdk_headers = gdk_public_h_sources + deprecated_h_sources + gdk_private_h_sources
@@ -282,13 +314,15 @@ if broadway_enabled cdata.set('GDK_WINDOWING_BROADWAY', '') endif
 gdkconfig = configure_file(
   input  : 'gdkconfig.h.meson',
   output : 'gdkconfig.h',
-  configuration : cdata
+  configuration : cdata,
+  install_dir: 'include/gtk-3.0/gdk/' # XXX ???
 )
 
 gdkversionmacros = configure_file(
   input  : 'gdkversionmacros.h.in',
   output : 'gdkversionmacros.h',
-  configuration: cdata
+  configuration: cdata,
+  install_dir: 'include/gtk-3.0/gdk/' # XXX ???
 )
 
 xinc = include_directories('x11')
@@ -335,6 +369,8 @@ if x11_enabled
     gdk_x_sources,
     gdk_x_private_sources
   ]
+
+  install_headers(gdk_x_public_headers, subdir: 'gtk-3.0/gdk/x11/')
 endif
 
 if wayland_enabled
@@ -351,6 +387,8 @@ if wayland_enabled
     gdk_wayland_sources,
     gdk_wayland_private_sources
   ]
+
+  install_headers(gdk_wayland_public_headers, subdir: 'gtk-3.0/gdk/wayland/')
 endif
 
 if broadway_enabled
@@ -363,6 +401,9 @@ if broadway_enabled
   ]
 endif
 
+
+install_headers(gdk_public_h_sources, subdir: 'gtk-3.0/gdk/')
+install_headers(deprecated_h_sources, subdir: 'gtk-3.0/gdk/deprecated/')
 
 libgdk = shared_library('gdk',
   sources: [gdk_sources, gdkconfig, gdkenum_h],
