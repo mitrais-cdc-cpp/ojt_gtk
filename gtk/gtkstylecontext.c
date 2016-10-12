@@ -741,7 +741,6 @@ gtk_style_context_query_func (guint    id,
  * gtk_style_context_get_property:
  * @context: a #GtkStyleContext
  * @property: style property name
- * @state: state to retrieve the property value for
  * @value: (out) (transfer full):  return location for the style property value
  *
  * Gets a style property from @context for the given state.
