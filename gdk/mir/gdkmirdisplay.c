@@ -62,6 +62,7 @@ typedef struct GdkMirDisplay
 
   ContentHubService *content_service;
   ContentHubHandler *content_handler;
+  GVariant *paste_data;
 } GdkMirDisplay;
 
 typedef struct GdkMirDisplayClass
@@ -106,6 +107,13 @@ static void get_pixel_formats (MirConnection *, MirPixelFormat *sw, MirPixelForm
  */
 
 G_DEFINE_TYPE (GdkMirDisplay, gdk_mir_display, GDK_TYPE_DISPLAY)
+
+static void
+pasteboard_changed_cb (GdkMirDisplay *display,
+                       gpointer       user_data)
+{
+  g_clear_pointer (&display->paste_data, g_variant_unref);
+}
 
 GdkDisplay *
 _gdk_mir_display_open (const gchar *display_name)
@@ -153,6 +161,12 @@ _gdk_mir_display_open (const gchar *display_name)
     "/",
     NULL,
     NULL);
+
+  g_signal_connect_swapped (
+    display->content_service,
+    "pasteboard-changed",
+    G_CALLBACK (pasteboard_changed_cb),
+    display);
 
   display->content_handler = content_hub_handler_skeleton_new ();
 
@@ -214,6 +228,7 @@ gdk_mir_display_dispose (GObject *object)
 {
   GdkMirDisplay *display = GDK_MIR_DISPLAY (object);
 
+  g_clear_pointer (&display->paste_data, g_variant_unref);
   g_dbus_interface_skeleton_unexport (G_DBUS_INTERFACE_SKELETON (display->content_handler));
   g_clear_object (&display->content_handler);
   g_clear_object (&display->content_service);
